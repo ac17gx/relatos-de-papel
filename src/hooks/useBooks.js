@@ -44,8 +44,15 @@ export function useBooks() {
       // Mezclar y elegir 20 aleatorios
       const shuffled = validBooks.sort(() => 0.5 - Math.random());
       const random20 = shuffled.slice(0, 20);
+      const booksWithPrice= random20.map(book => ({
+              author: book.author,
+              cover: book.cover,
+              id: book.id,
+              title: book.title,
+              price: Math.floor(Math.random() * 50) + 1 // Precio aleatorio entre 1 y 50
+            }));
 
-      setBooks(random20);
+      setBooks(booksWithPrice);
     };
 
     loadInitialBooks();

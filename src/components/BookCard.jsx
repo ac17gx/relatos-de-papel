@@ -8,16 +8,15 @@ export default function BookCard({ book }) {
         <img src={book.cover} alt={book.title} />
       ) : (
         <div className="book-no-cover">
-          📖 Sin portada disponible
+          Sin portada disponible
         </div>
       )}
 
-      {/* Contenido */}
       <h2>{book.title}</h2>
       <p>{book.author}</p>
+      <p>${book.price}</p>
 
-      {/* Botón/enlace */}
-      <Link to={`/book/${book.id}`}>
+      <Link to={`/book/${book.id}`} state={{ book }}>
         Ver detalle
       </Link>
     </div>

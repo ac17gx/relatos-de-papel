@@ -1,15 +1,17 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar"; 
+import Navbar from "../components/Navbar";
+import { useCart } from "../context/cartContext";
 
 export default function BookDetail() {
   const location = useLocation();
   const [book, setBook] = useState(null);
   const [authors, setAuthors] = useState([]);
   const [error, setError] = useState(null);
+  const { addToCart } = useCart();
 
   const workPath = location.pathname.replace("/book", "");
-
+  const bookDetail = location.state?.book;
   useEffect(() => {
     const load = async () => {
       try {
@@ -43,7 +45,7 @@ export default function BookDetail() {
   if (error)
     return (
       <>
-        <Navbar /> {/* Navbar arriba */}
+        <Navbar />
         <div className="container py-5 text-danger text-center">
           <h4>Error: {error}</h4>
         </div>
@@ -53,7 +55,7 @@ export default function BookDetail() {
   if (!book)
     return (
       <>
-        <Navbar /> {/* Navbar arriba */}
+        <Navbar />
         <div className="container py-5 text-center">
           <div className="spinner-border text-primary" role="status" />
           <p className="mt-3">Cargando detalle…</p>
@@ -63,7 +65,7 @@ export default function BookDetail() {
 
   return (
     <>
-      <Navbar /> {/* Navbar fijo arriba */}
+      <Navbar />
       <div className="container py-5" style={{ marginTop: "70px" }}>
         <div className="card shadow-lg">
           <div className="row g-0">
@@ -75,7 +77,7 @@ export default function BookDetail() {
                   className="img-fluid rounded"
                 />
               ) : (
-                <div className="text-muted">📖 Sin portada disponible</div>
+                <div className="text-muted">Sin portada disponible</div>
               )}
             </div>
             <div className="col-md-8">
@@ -90,7 +92,7 @@ export default function BookDetail() {
                   </p>
                 ) : (
                   <p className="text-muted">
-                    📖 Este libro no tiene descripción disponible
+                    Sin descripción disponible
                   </p>
                 )}
 
@@ -109,7 +111,7 @@ export default function BookDetail() {
                   <div className="mt-3">
                     <h5>Temas:</h5>
                     {book.subjects.slice(0, 8).map((s, idx) => (
-                      <span key={idx} className="badge bg-secondary me-1">
+                      <span key={idx} className="badge bg-success me-1">
                         {s}
                       </span>
                     ))}
@@ -122,20 +124,28 @@ export default function BookDetail() {
                       Creado:{" "}
                       {book.created?.value
                         ? new Date(book.created.value).toLocaleDateString()
-                        : "N/A"}
-                    </small>
-                  </p>
-                  <p className="card-text">
-                    <small className="text-muted">
+                        : "N/A"} 
+                      &nbsp;
                       Última modificación:{" "}
                       {book.last_modified?.value
                         ? new Date(book.last_modified.value).toLocaleDateString()
                         : "N/A"}
                     </small>
                   </p>
+                  <p className="card-text">
+                      Precio: ${bookDetail.price}
+                  </p>
                 </div>
               </div>
-              <Link to="/">⬅️ Regresar al Home</Link>
+              <div className="d-grid gap-2 col-6 mx-auto">
+                <button className="btn btn-secondary" type="button" onClick={() => addToCart(book, bookDetail.price)}>
+                  Agreagar al carrito
+                </button>
+              </div>
+              <br />
+              <div className="d-grid gap-2 d-md-flex justify-content-md-end pb-3 pe-3">
+                <Link to="/" className="btn btn-primary">Regresar</Link>
+              </div>
             </div>
           </div>
         </div>

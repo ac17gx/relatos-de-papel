@@ -25,7 +25,7 @@ export async function searchBooks(query) {
           : "https://via.placeholder.com/150?text=Sin+Imagen",
       }));
   } catch (error) {
-    console.error("⚠️ Error en fetch:", error);
+    console.error("Error en fetch:", error);
     return [];
   }
 }
