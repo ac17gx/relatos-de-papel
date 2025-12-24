@@ -5,10 +5,12 @@ import { LandingView } from "../views/LandingView";
 import { ShopView } from "../views/ShopView";
 import { BookDetailView } from "../views/BookDetailView";
 import { PaymentView } from "../views/PaymentView";
+import { Navbar } from "../components/Navbar";
 
 export const BookRouter = () => {
   return (
     <>
+    <Navbar/>
       <Routes>
         <Route path="/home" element={<HomeView />} />
         <Route path="/" element={<LandingView />} />
