@@ -10,7 +10,11 @@ export default function Home() {
   return (
     <div className="home-container" >
       <Navbar />
-      <h1>Librería Relatos de Papel</h1>
+      <h1>
+        <i className="bi bi-journal-bookmark me-2"></i>
+          Relatos de Papel
+      </h1>
+
       <SearchBar onSearch={fetchBooks} />
       <div className="book-list">
         {books.map((book) => (

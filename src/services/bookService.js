@@ -11,7 +11,7 @@ export async function searchBooks(query) {
 
     const data = await response.json();
 
-    // Filtrar resultados para que el título contenga el query
+
     return data.docs
       .filter((book) =>
         book.title?.toLowerCase().includes(query.toLowerCase())

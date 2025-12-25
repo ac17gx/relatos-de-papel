@@ -4,7 +4,7 @@ import { searchBooks } from "../services/bookService";
 export function useBooks() {
   const [books, setBooks] = useState([]);
 
-  // 🔎 Filtrar por autores y títulos únicos
+
   const filterValidBooks = (results, limit = 20) => {
     const seenAuthors = new Set();
     const seenTitles = new Set();
@@ -35,13 +35,13 @@ export function useBooks() {
 
   useEffect(() => {
     const loadInitialBooks = async () => {
-      // Usar una búsqueda genérica para traer muchos libros
-      const results = await searchBooks("the"); // puedes usar "a", "libro", etc.
 
-      // Filtrar por autores y títulos únicos
+      const results = await searchBooks("the"); 
+
+    
       const validBooks = filterValidBooks(results, 100);
 
-      // Mezclar y elegir 20 aleatorios
+     
       const shuffled = validBooks.sort(() => 0.5 - Math.random());
       const random20 = shuffled.slice(0, 20);
       const booksWithPrice= random20.map(book => ({

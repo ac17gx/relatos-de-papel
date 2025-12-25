@@ -13,8 +13,8 @@ export default function SearchBar({ onSearch }) {
         className="form-control form-control-sm me-2 w-25"
         placeholder="Buscar por título..."
       />
-      <button type="submit" className="btn btn-outline-secondary btn-sm">
-        🔍 Buscar
+      <button type="submit" className="btn btn-outline-primary btn-sm">
+         <i className="bi bi-search me-1"></i> Buscar
       </button>
     </form>
   );
