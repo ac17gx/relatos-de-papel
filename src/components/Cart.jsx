@@ -69,7 +69,7 @@ export default function CartModal({ open, onClose, title = "Carrito" }) {
               </div>
 
               <button type="button" className="btn btn-secondary" onClick={onClose}>Cerrar</button>
-              <Link to="" className="btn btn-primary" onClick={onClose}>Ir a pagar</Link>
+              <Link to="/cart" className="btn btn-primary" onClick={onClose}>Ir a pagar</Link>
             </div>
           </div>
         </div>

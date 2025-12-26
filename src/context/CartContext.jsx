@@ -61,14 +61,15 @@ function updateQuantity(bookId, quantity) {
   }
 
   const subtotal = items.reduce((s, it) => s + (it.price ?? 0) * it.quantity, 0);
-
+  const totalQty = items.reduce((s, it) => s + it.quantity, 0);
   const value = {
     items,
     addToCart,
     removeFromCart,
     updateQuantity,
     clearCart,
-    subtotal
+    subtotal,
+    totalQty
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
