@@ -22,7 +22,8 @@ export async function searchBooks(query) {
         author: book.author_name ? book.author_name[0] : "Autor desconocido",
         cover: book.cover_i
           ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-          : "https://via.placeholder.com/150?text=Sin+Imagen",
+          : "https://placehold.co/150x200?text=Sin+Imagen",
+        price: Math.floor(Math.random() * 50) + 1
       }));
   } catch (error) {
     console.error("Error en fetch:", error);

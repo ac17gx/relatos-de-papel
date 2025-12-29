@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import useDetailCheckout from '../hooks/DetailCheckoutHook';
 import usePaymentCheckout from '../hooks/PaymentCheckoutHook';
@@ -18,13 +18,13 @@ export default function DetailCheckout({ books = [] }) { //recibimos los libros 
                         {books.map((item, index) => ( /*hacemos el mapa de los items de books*/
                             <div key={index} className="card">
                                 <div id="item-checkout" className="card-body d-flex gap-3">
-                                    <Link to={`/book${item.book.key}`}>
-                                        <img id="item-img" className="img-fluid rounded" src={`https://covers.openlibrary.org/b/id/${item.book.covers[0]}-L.jpg`} alt={item.book.title} width={64} />
-                                    </Link>
+                                    <NavLink to={`/book${item.book.key}`} className="w-25">
+                                        <img id="item-img" className="img-fluid rounded" src={ Array.isArray(item.book.covers) && item.book.covers.length > 0 ? `https://covers.openlibrary.org/b/id/${item.book.covers[0]}-L.jpg` : "https://placehold.co/150x200?text=Sin+Imagen" } alt={item.book.title} />
+                                    </NavLink>
                                     <div id="item-info">
-                                        <Link to={`/book${item.book.key}`} className="text-decoration-none text-dark">
+                                        <NavLink to={`/book${item.book.key}`} className="text-decoration-none text-dark">
                                             <h4 className="card-title">Título: {item.book.title}</h4>
-                                        </Link>
+                                        </NavLink>
                                         <p className="card-text">
                                             {/*Autor: {item.book.author}<br />*/}
                                             Cantidad: {item.quantity}<br />

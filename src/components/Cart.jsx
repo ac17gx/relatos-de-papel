@@ -1,6 +1,6 @@
 import React from "react";
-import { useCart } from "../context/cartContext";
-import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { NavLink } from "react-router-dom";
 
 export default function CartModal({ open, onClose, title = "Carrito" }) {
   if (!open) return null;
@@ -11,7 +11,7 @@ export default function CartModal({ open, onClose, title = "Carrito" }) {
   return (
     <>
       <div className="modal-backdrop fade show" />
-      <div className="modal fade show" style={{ display: "block" }} tabIndex="-1" role="dialog" onClick={onClose} aria-modal="true">
+      <div className="modal fade show d-block" tabIndex="-1" role="dialog" onClick={onClose} aria-modal="true">
         <div className="modal-dialog modal-dialog-end" role="document" onClick={stop}>
           <div className="modal-content">
             <div className="modal-header">
@@ -47,13 +47,12 @@ export default function CartModal({ open, onClose, title = "Carrito" }) {
                             min="1"
                             value={quantity}
                             onChange={e => updateQuantity(book.key, Math.max(1, Number(e.target.value)))}
-                            style={{ width: 72 }}
-                            className="form-control form-control-sm"
+                            className="form-control form-control-sm w-25"
                           />
                           <div className="fw-semibold">
                             $ {price * quantity}
                           </div>
-                          <button className="btn btn-link text-danger btn-sm" onClick={() => removeFromCart(book.key)}>Eliminar</button>
+                          <button className="btn btn-Link text-danger btn-sm" onClick={() => removeFromCart(book.key)}>Eliminar</button>
                         </div>
                       </div>
                     </li>
@@ -69,7 +68,7 @@ export default function CartModal({ open, onClose, title = "Carrito" }) {
               </div>
 
               <button type="button" className="btn btn-secondary" onClick={onClose}>Cerrar</button>
-              <Link to="/cart" className="btn btn-primary" onClick={onClose}>Ir a pagar</Link>
+              <NavLink to="/cart" className="btn btn-primary" onClick={onClose}>Ir a pagar</NavLink>
             </div>
           </div>
         </div>

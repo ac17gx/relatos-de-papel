@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"; //se usa useNavigate para redirigir a otra pagina sin volver a pedir el HTML al servidor, solo cambiando la vista en el cliente
 import { toast } from "react-toastify"; //se usa react-toastify para alertas o notificaciones
-import { useCart } from "../context/cartContext"; //se usa el contexto del carrito
+import { useCart } from "../context/CartContext"; //se usa el contexto del carrito
 export default function usePaymentCheckout() {
     //creamos la variable y su asignanacion usando useNavigate para redirigir a otra pagina
     const navigate = useNavigate();
@@ -50,7 +50,7 @@ export default function usePaymentCheckout() {
 
                     //redirigimos a la pagina principal despues de 1.5 segundo
                     setTimeout(() => {
-                        navigate("/");
+                        navigate("/home");
                     }, 1500);
                 }
 

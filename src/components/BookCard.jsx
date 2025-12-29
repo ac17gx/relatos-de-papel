@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function BookCard({ book }) {
   return (
@@ -14,17 +14,21 @@ export default function BookCard({ book }) {
     
       <h2 className="h5">
         <i className="bi bi-journal-bookmark me-2"></i>
-        {book.title}
+        {book.title} 
       </h2>
       <p className="text-secondary">
         <i className="bi bi-person me-2"></i>
         {book.author}
       </p>
+        <p className="text-secondary">
+        <i className="bi bi-currency-dollar"></i>
+        {book.price}
+      </p>
 
       
-      <Link to={`/book/${book.id}`} className="btn btn-outline-primary btn-sm mt-2">
+      <NavLink to={`/book${book.id}`} className="btn btn-outline-primary btn-sm mt-2" state={{book}}>
         <i className="bi bi-info-circle me-1"></i> Ver detalle
-      </Link>
+      </NavLink>
     </div>
   );
 }

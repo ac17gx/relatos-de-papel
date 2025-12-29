@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"; //se usa useNavigate para redirigir a otra pagina sin volver a pedir el HTML al servidor, solo cambiando la vista en el cliente
-import { useCart } from "../context/cartContext"; //se usa el contexto del carrito
+import { useCart } from "../context/CartContext"; //se usa el contexto del carrito
 
 import DetailCheckout from '../components/DetailCheckout';
 import MethodPaymentCheckout from '../components/MethodPaymentCheckout';
@@ -20,7 +20,7 @@ const Checkout = () => {
     //si no hay items en el carrito, redirigimos a la pagina principal despues de 1.5 segundos
     if (items.length === 0) {
         setTimeout(() => {
-            navigate("/");
+            navigate("/home");
         }, 1500);
     }
     else {

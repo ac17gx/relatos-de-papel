@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { useCart } from "../context/cartContext";
-import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { NavLink } from "react-router-dom";
 
 export const Shop = () => {
   const { items, removeFromCart, subtotal, totalQty } = useCart();
@@ -13,11 +13,11 @@ export const Shop = () => {
         {items.length == 0 && (
           <div className="card text-center">
             <div className="card-body">
-              <h5 class="card-title">Libros Vacios</h5>
-              <p class="card-text">Sigue buscando tu libro preferido.</p>
-              <Link to="/" className="card-link ">
+              <h5 className="card-title">Libros Vacios</h5>
+              <p className="card-text">Sigue buscando tu libro preferido.</p>
+              <NavLink to="/home" className="card-link ">
                 Ir a comprar
-              </Link>
+              </NavLink>
             </div>
           </div>
         )}
@@ -33,18 +33,21 @@ export const Shop = () => {
                       <div className="col-2">
                         <img
                           className="img-fluid rounded-start"
-                          src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`}
+                            src={
+                            Array.isArray(book.covers) && book.covers.length > 0
+                              ? `https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
+                              : "https://placehold.co/150x200?text=Sin+Imagen"
+                          }
                           alt={book.title}
                         />
                       </div>
                       <div className="col-auto col-md-8">
                         <div className="fs-4">{book.title}</div>
                         <div className="text-start truncate-3">
-                          {`Descripcion: ${
-                            typeof book.description === "string"
+                          {`Descripción: ${typeof book.description === "string"
                               ? book.description
-                              : book.description.value
-                          }`}
+                              : book.description?.value ?? "Sin descripción"
+                            }`}
                         </div>
                         <div className="row">
                           <div className="col-auto">
@@ -75,12 +78,12 @@ export const Shop = () => {
             <div className="col-12 col-md-4">
               <div className=" text-secondary">Total</div>
               <div className="fs-1 fw-bold">{`${subtotal} $`}</div>
-              <Link
+              <NavLink
                 to="/payment/checkout"
                 className="btn btn-primary w-100 fs-3"
               >
                 Checkout
-              </Link>
+              </NavLink>
             </div>
           </div>
         )}

@@ -1,46 +1,20 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { useCart } from "../context/cartContext";
+import { useCart } from "../context/CartContext";
 
 export default function BookDetail() {
   const location = useLocation();
   const [book, setBook] = useState(null);
   const [authors, setAuthors] = useState([]);
   const [error, setError] = useState(null);
-  const { addToCart } = useCart();
+  const { addToCart, priceBookDetail: priceBooks } = useCart();
 
   const workPath = location.pathname.replace("/book", "");
   const bookDetail = location.state?.book;
 
-  //  CAMBIO: función de hash  para obtener un precio estable por id
-  function computePriceFromKey(id) {
-    let hash = 0;
-    for (let i = 0; i < id.length; i++) {
-      hash = (hash * 31 + id.charCodeAt(i)) >>> 0;
-    }
-    const base = 10 + (hash % 21); // precio entre 10 y 30
-    return base;
-  }
-
-  // CAMBIO: cache en localStorage para persistir el precio por libro
-  function getStablePrice(id) {
-    try {
-      const raw = localStorage.getItem("prices");
-      const map = raw ? JSON.parse(raw) : {};
-      if (map[id] != null) return map[id];
-      const p = computePriceFromKey(id);
-      map[id] = p;
-      localStorage.setItem("prices", JSON.stringify(map));
-      return p;
-    } catch {
-      // si localStorage falla, aún devolvemos un precio 
-      return computePriceFromKey(id);
-    }
-  }
-
   // CAMBIO: se genera un precio estable con el id del work (workPath)
-  const price = bookDetail?.price ?? getStablePrice(workPath);
+  const price = bookDetail.price;
 
   useEffect(() => {
     const load = async () => {
@@ -54,7 +28,9 @@ export default function BookDetail() {
           const authorPromises = data.authors.map(async (a) => {
             const id = a.author?.key;
             if (id) {
-              const resAuthor = await fetch(`https://openlibrary.org${id}.json`);
+              const resAuthor = await fetch(
+                `https://openlibrary.org${id}.json`
+              );
               if (resAuthor.ok) {
                 const authorData = await resAuthor.json();
                 return authorData.name;
@@ -75,7 +51,7 @@ export default function BookDetail() {
   if (error)
     return (
       <>
-        <Navbar /> 
+        <Navbar />
         <div className="container py-5 text-danger text-center">
           <h4>Error: {error}</h4>
         </div>
@@ -85,7 +61,7 @@ export default function BookDetail() {
   if (!book)
     return (
       <>
-        <Navbar /> 
+        <Navbar />
         <div className="container py-5 text-center">
           <div className="spinner-border text-primary" role="status" />
           <p className="mt-3">Cargando detalle…</p>
@@ -95,7 +71,7 @@ export default function BookDetail() {
 
   return (
     <>
-      <Navbar /> 
+      <Navbar />
       <div className="container py-5 book-detail-container">
         <div className="card shadow-lg">
           <div className="row g-0">
@@ -109,7 +85,7 @@ export default function BookDetail() {
               ) : (
                 <div className="book-no-cover">
                   <i className="bi bi-book display-6"></i>
-                  <span>Sin portada disponible</span> 
+                  <span>Sin portada disponible</span>
                 </div>
               )}
             </div>
@@ -132,7 +108,9 @@ export default function BookDetail() {
 
                 {authors.length > 0 && (
                   <div className="mt-3">
-                    <h5><i className="bi bi-person me-2"></i>Autores:</h5>
+                    <h5>
+                      <i className="bi bi-person me-2"></i>Autores:
+                    </h5>
                     <ul>
                       {authors.map((name, idx) => (
                         <li key={idx}>{name}</li>
@@ -143,7 +121,9 @@ export default function BookDetail() {
 
                 {book.subjects && book.subjects.length > 0 && (
                   <div className="mt-3">
-                    <h5><i className="bi bi-tags me-2"></i>Temas:</h5>
+                    <h5>
+                      <i className="bi bi-tags me-2"></i>Temas:
+                    </h5>
                     {book.subjects.slice(0, 8).map((s, idx) => (
                       <span key={idx} className="badge bg-info me-1">
                         {s}
@@ -167,7 +147,9 @@ export default function BookDetail() {
                       <i className="bi bi-clock-history me-2"></i>
                       Última modificación:{" "}
                       {book.last_modified?.value
-                        ? new Date(book.last_modified.value).toLocaleDateString()
+                        ? new Date(
+                            book.last_modified.value
+                          ).toLocaleDateString()
                         : "N/A"}
                     </small>
                   </p>
@@ -176,12 +158,6 @@ export default function BookDetail() {
                     Precio: {price} {/* CAMBIO: precio estable por libro */}
                   </p>
                 </div>
-
-                {!bookDetail && (
-                  <div className="alert alert-warning mt-3">
-                    No se recibió información del libro desde la navegación anterior (se usó precio local).
-                  </div>
-                )}
               </div>
 
               <div className="d-grid gap-2 col-6 mx-auto">
@@ -196,9 +172,9 @@ export default function BookDetail() {
 
               <br />
               <div className="d-grid gap-2 d-md-flex justify-content-md-end pb-3 pe-3">
-                <Link to="/" className="btn btn-outline-primary mt-3">
+                <NavLink to="/home" className="btn btn-outline-primary mt-3">
                   <i className="bi bi-arrow-left"></i> Regresar al Home
-                </Link>
+                </NavLink>
               </div>
             </div>
           </div>

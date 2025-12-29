@@ -170,10 +170,31 @@ body { background: linear-gradient(135deg, #eaf4fc, #fef6e4); }
   margin-bottom: 1rem;        
 }
 
-
 .truncate-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3; /* número de líneas */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Ícono del carrito */
+.cart-button__icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+ 
+/* Texto del carrito */
+.cart-button__text {
+  font-size: 14px;
+}
+ 
+/* En móviles ocultamos el texto */
+@media (max-width: 768px) {
+  .cart-button__text {
+    display: none;
+  }
+}
+ 

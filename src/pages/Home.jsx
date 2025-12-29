@@ -6,7 +6,6 @@ import Navbar from "../components/Navbar"; //
 export default function Home() {
   const { books, fetchBooks } = useBooks();
 
-  const filteredBooks = books.filter( (book) => book.cover && book.description );
   return (
     <div className="home-container" >
       <Navbar />
