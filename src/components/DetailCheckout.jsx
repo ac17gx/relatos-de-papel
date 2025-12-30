@@ -12,12 +12,12 @@ export default function DetailCheckout({ books = [] }) { //recibimos los libros 
     return (
         <div id="detail-checkout" className="container">
             <div className="row">
-                <div id="list-checkout" className="col-6">
+                <div id="list-checkout" className="col-12 col-md-8 mb-4">
                     <h3>Detalle de pedido</h3>
                     <div className="d-flex flex-column gap-3">
                         {books.map((item, index) => ( /*hacemos el mapa de los items de books*/
                             <div key={index} className="card">
-                                <div id="item-checkout" className="card-body d-flex gap-3">
+                                <div id="item-checkout" className="card-body d-flex flex-column flex-md-row gap-3">
                                     <NavLink to={`/book${item.book.key}`} className="w-25">
                                         <img id="item-img" className="img-fluid rounded" src={ Array.isArray(item.book.covers) && item.book.covers.length > 0 ? `https://covers.openlibrary.org/b/id/${item.book.covers[0]}-L.jpg` : "https://placehold.co/150x200?text=Sin+Imagen" } alt={item.book.title} />
                                     </NavLink>
@@ -37,7 +37,7 @@ export default function DetailCheckout({ books = [] }) { //recibimos los libros 
                         ))}
                     </div>
                 </div>
-                <div id="total-checkout" className="col-3">
+                <div id="total-checkout" className="col-12 col-md-4">
                     <h3>Total del pedido</h3>
                     <p>Cantidad libros: {totalBooks}</p>
                     <p><strong>Total a pagar: ${totalPrice.toFixed(2)}</strong></p>
